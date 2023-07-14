@@ -28,4 +28,20 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
+      env:
+        SERVER_PORT: ${{secrets.SERVER_PORT}}
+        DB_PORT: ${{secrets.DB_PORT}}
+        DB_NAME: ${{secrets.DB_NAME}}
+        DB_USERNAME: ${{secrets.DB_USERNAME}}
+        DB_USER_PASSWORD: ${{secrets.DB_USER_PASSWORD}}
       run: mvn clean install
+
+    - name: Build & push Docker image
+      uses: mr-smithers-excellent/docker-build-push@v6
+      with:
+        image: surjendu104/location-validator-app
+        tags: latest
+        registry: docker.io
+        dockerfile: Dockerfile
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
