@@ -27,6 +27,9 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
+    - name: start mySql
+      run: |
+        sudo /etc/init.d/mysql start
     - name: Build with Maven
       env:
         SERVER_PORT: ${{secrets.SERVER_PORT}}
