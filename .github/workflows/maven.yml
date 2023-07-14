@@ -29,7 +29,7 @@ jobs:
         cache: maven
     - name: Install MySQL
       run: |
-        sudo apt-get install -y mysql-client
+        sudo /etc/init.d/mysql start
         mysql --host ${{secrets.SERVER_HOST}} --port ${{secrets.SERVER_PORT}} -e "SHOW DATABASES"
     - name: Create MySQL User
       run: |
