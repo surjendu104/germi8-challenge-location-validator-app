@@ -32,10 +32,10 @@ jobs:
         sudo /etc/init.d/mysql start
     - name: Create MySQL User
       run: |
-        mysql -e "CREATE USER '${{secrets.DB_USER_PASSWORD}}'@'localhost' IDENTIFIED BY '${{secrets.DB_USER_PASSWORD}}';"
+        mysql -u "root" -p "root" -e "CREATE USER '${{secrets.DB_USERNAME}}'@'localhost' IDENTIFIED BY '${{secrets.DB_USER_PASSWORD}}';"
     - name: Create Database
       run: |
-        mysql "CREATE DATABASE ${{ secrets.DB_NAME }};"
+        mysql -u ${{secrets.DB_USERNAME}} -p ${{secrets.DB_USER_PASSWORD}} "CREATE DATABASE ${{ secrets.DB_NAME }};"
     - name: Build with Maven
       env:
         SERVER_PORT: ${{secrets.SERVER_PORT}}
