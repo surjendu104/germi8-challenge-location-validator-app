@@ -27,16 +27,15 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
-    - name: Install MySQL
-      run: |
-        sudo /etc/init.d/mysql start
-        mysql -u root -e "SHOW DATABASES"
-    - name: Create MySQL User
-      run: |
-        mysql -u "root" -p "root" -e "CREATE USER '${{secrets.DB_USERNAME}}'@'localhost' IDENTIFIED BY '${{secrets.DB_USER_PASSWORD}}';"
-    - name: Create Database
-      run: |
-        mysql -u ${{secrets.DB_USERNAME}} -p ${{secrets.DB_USER_PASSWORD}} "CREATE DATABASE ${{ secrets.DB_NAME }};"
+    - name: Setup MySQL
+      uses: mirromutth/mysql-action@v1.1
+      with:
+        host port: ${{secrets.SERVER_PORT}}
+        mysql version: '8.0'
+        mysql database: ${{secrets.DB_NAME}}
+        mysql root password: ${{ secrets.DB_USER_PASSWORD }}
+        mysql user: ${{secrets.DB_USERNAME}}
+        mysql password: ${{ secrets.DB_USER_PASSWORD }}
     - name: Build with Maven
       env:
         SERVER_PORT: ${{secrets.SERVER_PORT}}
