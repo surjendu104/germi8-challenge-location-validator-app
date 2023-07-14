@@ -30,7 +30,7 @@ jobs:
     - name: Install MySQL
       run: |
         sudo /etc/init.d/mysql start
-        mysql --host ${{secrets.SERVER_HOST}} --port ${{secrets.SERVER_PORT}} -e "SHOW DATABASES"
+        mysql --host ${{secrets.SERVER_HOST}} --port ${{secrets.SERVER_PORT}} -u "root" -p "root" -e "SHOW DATABASES"
     - name: Create MySQL User
       run: |
         mysql -u "root" -p "root" -e "CREATE USER '${{secrets.DB_USERNAME}}'@'localhost' IDENTIFIED BY '${{secrets.DB_USER_PASSWORD}}';"
