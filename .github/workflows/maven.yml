@@ -30,7 +30,7 @@ jobs:
     - name: Setup MySQL
       uses: mirromutth/mysql-action@v1.1
       with:
-        host port: ${{secrets.SERVER_PORT}}
+        host port: ${{secrets.DB_PORT}}
         mysql version: '8.0'
         mysql database: ${{secrets.DB_NAME}}
         mysql root password: ${{ secrets.DB_USER_PASSWORD }}
