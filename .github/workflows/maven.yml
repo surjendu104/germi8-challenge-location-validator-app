@@ -27,11 +27,9 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
-    - name: Set up MySQL
-      uses: mysql/setup-mysql@v2
-      with:
-        mysql-version: '8.0'
-        enable-named-pipe-auth: true
+    - name: Start MySQL
+      run: |
+        sudo /etc/init.d/mysql start
     - name: Create MySQL User
       run: |
         mysql -e "CREATE USER '${{secrets.DB_USER_PASSWORD}}'@'localhost' IDENTIFIED BY '${{secrets.DB_USER_PASSWORD}}';"
